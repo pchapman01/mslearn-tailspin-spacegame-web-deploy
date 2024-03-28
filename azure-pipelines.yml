@@ -69,7 +69,7 @@ stages:
   - deployment: Deploy
     pool:
       vmImage: 'ubuntu-20.04'
-    environment: dev
+    environment: pchapman-dev
     variables:
     - group: pchapman-Release
     strategy:
