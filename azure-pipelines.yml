@@ -17,7 +17,7 @@ stages:
 
     variables:
       wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-      dotnetSdkVersion: '5.x'
+      dotnetSdkVersion: '6.x'
 
     steps:
     - task: UseDotNet@2
@@ -120,7 +120,7 @@ stages:
 #       vmImage: 'ubuntu-20.04'
 #     environment: staging
 #     variables:
-#     - group: 'Release'
+#     - group: 'pchapman-Release'
 #     strategy:
 #       runOnce:
 #         deploy:
@@ -130,10 +130,9 @@ stages:
 #           - task: AzureWebApp@1
 #             displayName: 'Azure App Service Deploy: website'
 #             inputs:
-#               azureSubscription: 'Resource Manager - Tailspin - Space Game'
+#               azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
 #               appName: '$(WebAppNameStaging)'
 #               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
-
   - job: RunLoadTests
     dependsOn: Deploy
     displayName: 'Run load tests'
