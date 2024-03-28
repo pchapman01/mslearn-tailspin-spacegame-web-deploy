@@ -3,6 +3,7 @@ trigger:
 
 variables:
   buildConfiguration: 'Release'
+  dotnetSdkVersion: '6.x'
 
 stages:
 - stage: 'Build'
@@ -17,7 +18,7 @@ stages:
 
     variables:
       wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-      dotnetSdkVersion: '5.x'
+      dotnetSdkVersion: '6.x'
 
     steps:
     - task: UseDotNet@2
@@ -110,7 +111,6 @@ stages:
               azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
               appName: '$(WebAppNameTest)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
-
   - job: RunUITests
     dependsOn: Deploy
     displayName: 'Run UI tests'
@@ -136,7 +136,6 @@ stages:
         arguments: '--no-build --configuration $(buildConfiguration)'
         publishTestResults: true
         projects: '$(System.DefaultWorkingDirectory)/**/*UITests.csproj'
-
 
 # - stage: 'Staging'
 #   displayName: 'Deploy to the staging environment'
