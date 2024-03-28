@@ -5,13 +5,13 @@ variables:
   buildConfiguration: 'Release'
   releaseBranchName: 'release'
 
-schedules:
-- cron: '0 14 * * *'
-  displayName: 'Deploy every day at 2 P.M.'
-  branches:
-    include:
-    - release
-  always: false 
+# schedules:
+# - cron: '0 14 * * *'
+#   displayName: 'Deploy every day at 2 P.M.'
+#   branches:
+#     include:
+#     - release
+#   always: false 
 
 stages:
 - stage: 'Build'
@@ -127,25 +127,25 @@ stages:
               appName: '$(WebAppNameTest)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
 
-- stage: 'Staging'
-  displayName: 'Deploy to the staging environment'
-  dependsOn: Test
-  jobs:
-  - deployment: Deploy
-    pool:
-      vmImage: 'ubuntu-20.04'
-    environment: staging
-    variables:
-    - group: 'pchapman-Release'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - download: current
-            artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
-              appName: '$(WebAppNameStaging)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+# - stage: 'Staging'
+#   displayName: 'Deploy to the staging environment'
+#   dependsOn: Test
+#   jobs:
+#   - deployment: Deploy
+#     pool:
+#       vmImage: 'ubuntu-20.04'
+#     environment: staging
+#     variables:
+#     - group: 'pchapman-Release'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - download: current
+#             artifact: drop
+#           - task: AzureWebApp@1
+#             displayName: 'Azure App Service Deploy: website'
+#             inputs:
+#               azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
+#               appName: '$(WebAppNameStaging)'
+#               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
