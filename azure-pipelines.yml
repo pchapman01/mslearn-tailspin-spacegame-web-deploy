@@ -108,8 +108,20 @@ stages:
             displayName: 'Azure App Service Deploy: website'
             inputs:
               azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
+              deployToSlotOrASE: 'true'
+              resourceGroupName: 'pchapman-tailspin-space-game-rg'
+              slotName: 'swap'
               appName: '$(WebAppNameTest)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+          - task: AzureAppServiceManage@0
+            displayName: 'Swap deployment slots'
+            inputs:
+              azureSubscription: 'AzDO-Service-Connection-Policyteam-Sandbox-ScratchPad'
+              resourceGroupName: 'pchapman-tailspin-space-game-rg'
+              webAppName: '$(WebAppNameTest)'
+              sourceSlot: 'swap'
+              targetSlot: 'production'
+              action: 'Swap Slots'
 
 # - stage: 'Staging'
 #   displayName: 'Deploy to the staging environment'
